@@ -16,7 +16,7 @@ BUILDPACK_DIR=`cd $(dirname $0)/..; pwd`
 
 # extract url of latest production version from the rss feed
 RSSFEED_URL="http://owl.phy.queensu.ca/~phil/exiftool/rss.xml"
-TARBALL_URL="$(curl -s -o - "$RSSFEED_URL" | perl -ne 'if (!$got && (/\<title\>.+production release.+\<\/title\>/i .. /\<\/item\>/) && /enclosure.+(http.+\.tar\.gz)/) {print $1; $got = 1}')"
+TARBALL_URL="https://s3.amazonaws.com/buildpack-exiftool/exiftool-9.40.tar.gz"
  RENAME_DIR="$(echo "$TARBALL_URL" | perl -ne '/.+\/(.+)\.tar\.gz/ && print $1')"
  VERSION_NO="$(echo "$RENAME_DIR"  | perl -ne '/ExifTool-(.+)$/i   && print $1')"
 
