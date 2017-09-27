@@ -15,7 +15,6 @@ indent() {
 BUILDPACK_DIR=`cd $(dirname $0)/..; pwd`
 
 # extract url of latest production version from the rss feed
-RSSFEED_URL="http://owl.phy.queensu.ca/~phil/exiftool/rss.xml"
 TARBALL_URL="https://s3.amazonaws.com/buildpack-exiftool/exiftool-9.40.tar.gz"
  RENAME_DIR="$(echo "$TARBALL_URL" | perl -ne '/.+\/(.+)\.tar\.gz/ && print $1')"
  VERSION_NO="$(echo "$RENAME_DIR"  | perl -ne '/ExifTool-(.+)$/i   && print $1')"
@@ -35,11 +34,11 @@ curl --fail --retry 3 --retry-delay 1 --connect-timeout 3 "$TARBALL_URL" -s -o -
 # configure path
 mkdir -p    "$PROFILE_PATH"
 cat <<EOF > "$PROFILE_PATH/exiftool.sh"
-export PATH="$VENDOR_PATH/exiftool:\$PATH"
+export PATH="$VENDOR_PATH/exiftool/bin:\$PATH"
 EOF
 
 # show installed version
 mv "$RENAME_DIR" exiftool
-cd             ./exiftool
+cd             ./exiftool/bin
 echo "Installed: "`ls exif*` | indent
 echo
